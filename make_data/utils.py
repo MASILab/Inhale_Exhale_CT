@@ -1,3 +1,5 @@
+#Adapted from https://github.com/MASILab/multipurpose-docker-cloud-server
+
 import os
 import pandas as pd
 import numpy as np
@@ -13,7 +15,7 @@ import json
 def load_json_config(config_file):
     f = open(config_file)
     config = json.load(f)
-    return config
+    return config 
 
 
 class ArchiveUtils:
@@ -228,7 +230,7 @@ class ArchiveUtils:
             scan_info_record_df['ScanLength'] >= 200]
 
         include_series_list = []
-        for modality_tag in ['ABDOMEN', 'CHEST']:
+        for modality_tag in ['ABDOMEN', 'CHEST', 'HEART']:
             modality_df = scan_info_record_df.loc[scan_info_record_df['BodyPart'] == modality_tag]
             for subject_id, subject_df in modality_df.groupby(by='PatientID'):
                 for study_date, sess_df in subject_df.groupby(by='StudyDate'):
