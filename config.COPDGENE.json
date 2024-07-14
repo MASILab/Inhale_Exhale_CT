@@ -1,0 +1,10 @@
+{
+    "dcm2niix": "/nfs/masi/xuk9/src/image_archive_docker_version/tools/dcm2niix",
+    "nproc": 20,
+    "in_dcm_dir": "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/raw_data",
+    "out_dcm_dir": "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/dcm2nii/DICOM",
+    "out_nii_dir": "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/dcm2nii/NIfTI",
+    "out_preview_dir": "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/dcm2nii/preview",
+    "out_scan_index_csv": "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/dcm2nii/scan.csv",
+    "out_app_dir": "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/dcm2nii/app_data"
+}
