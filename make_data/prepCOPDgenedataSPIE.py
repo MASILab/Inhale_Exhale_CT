@@ -6,9 +6,10 @@ import seaborn as sns
 import shutil 
 from tqdm import tqdm
 import pydicom as pyd
+import re
 
 def curate_copd_data_SPIE():
-    copd = pd.read_csv('/fs5/p_masi/krishar1/COPDGENE/COPD_gene_COPDsubjects.csv')
+    copd = pd.read_csv('/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/COPD_gene_COPDsubjects.csv')
     file_names = copd['File Name'].to_list()
     source = '/fs5/p_masi/krishar1/COPDGENE/SPIE_2025'
 
@@ -60,4 +61,21 @@ def curate_copd_data_SPIE():
     df.to_csv("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/copdgene_goldcriteria_SPIE_data.csv", index=False)
 
 
-curate_copd_data_SPIE()
+# curate_copd_data_SPIE()
+
+
+def get_inspiratory_expiratory_GEkernels():
+    copd_bone_standard = pd.read_csv("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/copdgene_goldcriteria_SPIE_data_GEkernels.csv")
+    for index, row in tqdm(copd_bone_standard.iterrows()):
+        print(row['File_Path'])
+        count = row['File_Path'].count('/')
+        head, tail = row['File_Path'].rsplit('/', 1)
+        #Check if the expression "INSP_SHARP" is in the file path
+        match = re.search('(INSP_SHARP|EXP_SHARP|INSP_STD|EXP_STD|EXP-SHARP|INSP-SHARP|INSP-STD|EXP-STD)', tail)
+        if match:
+            copd_bone_standard.at[index, 'Inspiration_Expiration'] = match.group()
+        else:
+            copd_bone_standard.at[index, 'Inspiration_Expiration'] = pd.NA
+
+    copd_bone_standard.to_csv("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/copdgene_GOLD_GEkernels_matched.csv", index=False)
+get_inspiratory_expiratory_GEkernels()
