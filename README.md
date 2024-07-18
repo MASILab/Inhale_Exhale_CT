@@ -2,6 +2,7 @@
 Repository for harmonization of reconstruction kernels on inspiratory, expiratory scans
 
 ### Creating the COPDGENE curated dataset from the spreadsheet (Needs to be done in a single file in the future)
+### Cycle GAN data curation
 1) **COPDGene_characterization.ipynb**: Looked at the data. Downloaded the subjects and created spreadsheets for downloaded subjects. Cleaned the dataset by changing the labels of GOLD classification to have standard values across them. Saved the spreadsheet at /fs5/p_masi/krishar1/COPDGENE/COPD_gene_7368subjects.csv
 
 2) **datasplot_copdgene.ipynb**: Loaded the saved spreadhseet from the previous python notebook. Cleaned the dataset again to only account for GOLD stages 2-4. Dropped everything else. saved spreadhseet to /nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/COPD_gene_COPDsubjects.csv
@@ -27,6 +28,9 @@ Repository for harmonization of reconstruction kernels on inspiratory, expirator
     - Drop duplicates in the file /nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/final_paired_data_spreadsheets/COPD_GE_pairedkernels_100randomsamples_GOLDlabels.csv
 
 7) **traintestsplit_dev.ipynb**: Script to do the train, test split for controls and cases. Very easy to follows
+
+
+- Voxel morph needs its own data curation (To do)
 
 
 
