@@ -34,3 +34,6 @@ Step 3: Configure dicomtonii.sh under the make_data folder and run the bash scri
 
 4) **train_test_split.ipynb**: Merge dataframes of initial sampling and additional sampling. Add splits of train, val and test for the purpose of training cycleGAN.
 
+5) **classifyGOLDfor100sampledCOPD.ipynb**: GOLD classification got the sampled labels. Some values were repeated again and the dataframe size went from 200 to 248. However, labels are correct.
+
+6) **samplecontrols.ipynb**: Sampling all controls. Contains entire code workflow from the first 4 steps in one notebook (Easy for future reference)
