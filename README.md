@@ -1,23 +1,6 @@
 # Inhale_Exhale_CT
 Repository for harmonization of reconstruction kernels on inspiratory, expiratory scans
 
-
-## Data Prep: 
-Step 1: Have all the data under a single directory. Ensure that only DICOM files exist in the subdirectories 
-
-Step 2: Create a config file with the following parameters: 
-    "dcm2niix": Location of dcm2niix tool,
-    "nproc": Number of threads
-    "in_dcm_dir": Input direcotry with all the DICOM files
-    "out_dcm_dir": Archive file to output DICOM directories
-    "out_nii_dir": Output direcotry for the NIfTIs
-    "out_preview_dir": Output png folder with triplanar screenshots
-    "out_scan_index_csv": Spreadsheet with extracted DICOM information from the DICOM tags
-    "out_app_dir": Directory for app data 
-
-Step 3: Configure dicomtonii.sh under the make_data folder and run the bash script
-
-
 ### Creating the COPDGENE curated dataset from the spreadsheet 
 1) **COPDGene_characterization.ipynb**: Looked at the data. Downloaded the subjects and created spreadsheets for downloaded subjects. Cleaned the dataset by changing the labels of GOLD classification to have standard values across them. Saved the spreadsheet at /fs5/p_masi/krishar1/COPDGENE/COPD_gene_7368subjects.csv
 
@@ -32,8 +15,26 @@ Step 3: Configure dicomtonii.sh under the make_data folder and run the bash scri
     - Get addiitonal subjects since 100 subjects were not obtained. Once attained, synlink the data. Run the DICOM to NIfTI conversion and obtain the spreadsheet
     - Repeat the data filtering process and get a new spreadsheet with paired kernels 
 
-4) **train_test_split.ipynb**: Merge dataframes of initial sampling and additional sampling. Add splits of train, val and test for the purpose of training cycleGAN.
+4) **classifyGOLDfor100sampledCOPD.ipynb**: GOLD classification labels for the existing sampled data. For the 100 subjects, the final dataframe had duplicates which need to be removed.
 
 5) **classifyGOLDfor100sampledCOPD.ipynb**: GOLD classification got the sampled labels. Some values were repeated again and the dataframe size went from 200 to 248. However, labels are correct.
 
 6) **samplecontrols.ipynb**: Sampling all controls. Contains entire code workflow from the first 4 steps in one notebook (Easy for future reference)
+
+7) **train_test_split.py**: Splitting the labels for cases and controls to finalize the data for training the model.
+
+
+### Data Prep: 
+Step 1: Have all the data under a single directory. Ensure that only DICOM files exist in the subdirectories 
+
+Step 2: Create a config file with the following parameters: 
+    "dcm2niix": Location of dcm2niix tool,
+    "nproc": Number of threads
+    "in_dcm_dir": Input direcotry with all the DICOM files
+    "out_dcm_dir": Archive file to output DICOM directories
+    "out_nii_dir": Output direcotry for the NIfTIs
+    "out_preview_dir": Output png folder with triplanar screenshots
+    "out_scan_index_csv": Spreadsheet with extracted DICOM information from the DICOM tags
+    "out_app_dir": Directory for app data 
+
+Step 3: Configure dicomtonii.sh under the make_data folder and run the bash script
