@@ -1,10 +1,10 @@
  #!/bin/bash
  
  # Source directory containing the original NIfTI files
- source_dir="/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/train/inspiratory_BONE"
+ source_dir="/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/train/expiratory_STANDARD"
  
  # Target directory to store the output slices
- target_dir="/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/train_slices/inspiratory_BONE"
+ target_dir="/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/train_slices/expiratory_STANDARD"
  
  # Create the target directory if it doesn't exist
  mkdir -p "$target_dir"
