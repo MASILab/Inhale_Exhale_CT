@@ -29,8 +29,10 @@ Repository for harmonization of reconstruction kernels on inspiratory, expirator
 
 7) **traintestsplit_dev.ipynb**: Script to do the train, test split for controls and cases. Very easy to follows
 
+8) **trian_test_split.py**: Script to curate the data for cycleGAN. Using controls and COPD cases for training, validation and test dataset. /nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/COPD_controls_SPIE.csv and /nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/COPD_cases_GE_SPIE.csv are used to make the dataset.
 
-- Voxel morph needs its own data curation (To do)
+
+- Voxel morph needs its own data curation (To do, needs to clarigy)
 
 
 
