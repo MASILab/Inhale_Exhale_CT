@@ -207,57 +207,6 @@ class BaseModel(ABC):
                     self.__patch_instance_norm_state_dict(state_dict, net, key.split('.'))
                 net.load_state_dict(state_dict)
     
-    def load_partial_networks(self, epoch):
-        pretrained_nets = ['G_SH_encoder', 'G_SS_encoder', 'G_GS_encoder', 'G_GH_encoder', 'D_A', 'D_B', 'D_C', 'D_D', 'G_SH_decoder', 'G_SS_decoder', 'G_GS_decoder', 'G_GH_decoder']
-        for name in self.model_names:
-            if name in pretrained_nets:
-                print(f"Loading weights of {name} models from the previous training!")
-                if isinstance(name, str):
-                    load_filename = '%s_net_%s.pth' % (epoch, name)
-                    load_path = os.path.join(self.save_dir, load_filename)
-                    net = getattr(self, 'net' + name)
-                    if isinstance(net, torch.nn.DataParallel):
-                        net = net.module
-                    print('loading the model from %s' % load_path)
-                    # if you are using PyTorch newer than 0.4 (e.g., built from
-                    # GitHub source), you can remove str() on self.device
-                    state_dict = torch.load(load_path, map_location=str(self.device))
-                    if hasattr(state_dict, '_metadata'):
-                        del state_dict._metadata
-
-                    # patch InstanceNorm checkpoints prior to 0.4
-                    for key in list(state_dict.keys()):  # need to copy keys here because we mutate in loop
-                        self.__patch_instance_norm_state_dict(state_dict, net, key.split('.'))
-                    net.load_state_dict(state_dict)
-
-            else: 
-                if name.endswith("encoder") or name.endswith("decoder"):
-                    print(f"Loading average weights of pretrained models for {name}")
-                    model_name = name.split("_")[2]
-                    statedict = self.average_pretrained_weights(model_name) #State dict of average weights
-                    net = getattr(self, 'net' + name)
-                    if isinstance(net, torch.nn.DataParallel):
-                        net = net.module
-                    if hasattr(statedict, '_metadata'):
-                        del statedict._metadata
-                    for key in list(statedict.keys()):  # need to copy keys here because we mutate in loop
-                        self.__patch_instance_norm_state_dict(statedict, net, key.split('.'))
-                    net.load_state_dict(statedict)
-                elif name.startswith("D"):
-                    model_name = "discriminator"
-                    statedict = self.average_pretrained_weights(model_name)
-                    net = getattr(self, 'net' + name)
-                    if isinstance(net, torch.nn.DataParallel):
-                        net = net.module
-                    if hasattr(statedict, '_metadata'):
-                        del statedict._metadata
-                    for key in list(statedict.keys()):  # need to copy keys here because we mutate in loop
-                        self.__patch_instance_norm_state_dict(statedict, net, key.split('.'))
-                    net.load_state_dict(statedict)
-                    print(f"{name} is a new discriminator. Initialize with average weights of pretrained discriminators")
-
-               
-
     def print_networks(self, verbose):
         """Print the total number of parameters in the network and (if verbose) network architecture
 

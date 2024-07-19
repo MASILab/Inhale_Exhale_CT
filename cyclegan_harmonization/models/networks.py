@@ -843,8 +843,8 @@ class ResNetDecoder(nn.Module):
     def forward(self, x):
         return self.decoder(x)
 
-input1 = torch.randn(1,1,512,512)
-resnet = define_G(1, 1, 64, 'resnet_9blocks', 'instance', False, 'normal', 0.02, [])
+# input1 = torch.randn(1,1,512,512)
+# resnet = define_G(1, 1, 64, 'resnet_9blocks', 'instance', False, 'normal', 0.02, [])
 
 
 # #Testing the model
