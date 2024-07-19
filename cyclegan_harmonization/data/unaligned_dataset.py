@@ -23,8 +23,8 @@ class UnalignedDataset(BaseDataset):
         BaseDataset.__init__(self, opt)
 
         #When training for four domains, use this code from lines 33-51
-        self.dir_A = os.path.join(opt.dataroot, opt.phase + opt.source_kernel)  
-        self.dir_B = os.path.join(opt.dataroot, opt.phase + opt.target_kernel) 
+        self.dir_A = os.path.join(opt.dataroot, opt.source_kernel)  
+        self.dir_B = os.path.join(opt.dataroot, opt.target_kernel) 
         print(self.dir_A)
         print(self.dir_B)
         self.A_paths = sorted(make_dataset(self.dir_A, opt.max_dataset_size))   

@@ -42,12 +42,6 @@ class BaseOptions():
         # dataset parameters
         parser.add_argument('--dataset_mode', type=str, default='unaligned', help='chooses how datasets are loaded. [multipathunaligned | unaligned | aligned | single | colorization]')
         #parser.add_argument('--direction', type=str, default='AtoB', help='AtoB or BtoA') #Original direction for 2 domains!
-        parser.add_argument('--direction1', type=str, default='AtoB', help='AtoB or BtoA')
-        parser.add_argument('--direction2', type=str, default='AtoC', help='AtoC or CtoA')
-        parser.add_argument('--direction3', type=str, default='AtoD', help='AtoD or DtoA')
-        parser.add_argument('--direction4', type=str, default='BtoC', help='BtoC or CtoB')
-        parser.add_argument('--direction5', type=str, default='BtoD', help='BtoD or DtoB')
-        parser.add_argument('--direction6', type=str, default='CtoD', help='CtoD or DtoC')
         parser.add_argument('--serial_batches', action='store_true', help='if true, takes images in order to make batches, otherwise takes them randomly')
         parser.add_argument('--num_threads', default=4, type=int, help='# threads for loading data')
         parser.add_argument('--batch_size', type=int, default=1, help='input batch size')
