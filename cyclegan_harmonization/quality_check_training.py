@@ -17,8 +17,8 @@ def convert_toHU(normalized_slice):
     hu_slice = np.clip(hu_slice, clip_range[0], clip_range[1])
     return hu_slice
 
-real = Image.open("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/experiments/inspiration_expiration_COPD/images/epoch007_real_A.png").convert('L')
-fake = Image.open("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/experiments/inspiration_expiration_COPD/images/epoch007_fake_B.png").convert('L')
+real = Image.open("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/experiments/inspiration_expiration_COPD/images/epoch019_real_A.png").convert('L')
+fake = Image.open("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/experiments/inspiration_expiration_COPD/images/epoch019_fake_B.png").convert('L')
 
 
 #convert the PIL images into numpy arrays 
@@ -34,13 +34,13 @@ fig = plt.figure(figsize=(25,25))
 ax1 = fig.add_subplot(1, 3, 1)
 ax2 = fig.add_subplot(1, 3, 2)
 ax3 = fig.add_subplot(1, 3, 3)
-im1 = ax1.imshow(np.rot90(real_arrHU),cmap = "gray", vmin = -150, vmax = 150)
+im1 = ax1.imshow(np.rot90(real_arrHU),cmap = "gray", vmin = -1024, vmax = 600)
 fig.colorbar(im1, ax=ax1, fraction=0.046, pad=0.04)
 ax1.set_title("Real inspiratory image")
-im2 = ax2.imshow(np.rot90(fake_arrHU), cmap = 'gray', vmin = -150, vmax = 150)
+im2 = ax2.imshow(np.rot90(fake_arrHU), cmap = 'gray', vmin = -1024, vmax = 600)
 fig.colorbar(im2, ax=ax2, fraction=0.046, pad=0.04)
 ax2.set_title("Synthetic inspiratory image")
-im3 = ax3.imshow(np.rot90(diff), cmap = "gray", vmin = -150, vmax = 150)
+im3 = ax3.imshow(np.rot90(diff), cmap = "gray", vmin = -1024, vmax = 600)
 fig.colorbar(im3, ax=ax3, fraction=0.046, pad=0.04)
 ax3.set_title("Difference Image")
 plt.show()
