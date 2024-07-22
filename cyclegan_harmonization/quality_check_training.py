@@ -17,8 +17,8 @@ def convert_toHU(normalized_slice):
     hu_slice = np.clip(hu_slice, clip_range[0], clip_range[1])
     return hu_slice
 
-real = Image.open("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/experiments/inspiration_expiration_COPD/images/epoch019_real_A.png").convert('L')
-fake = Image.open("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/experiments/inspiration_expiration_COPD/images/epoch019_fake_B.png").convert('L')
+real = Image.open("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/experiments/inspiration_expiration_COPD/images/epoch050_real_A.png").convert('L')
+fake = Image.open("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/experiments/inspiration_expiration_COPD/images/epoch050_fake_B.png").convert('L')
 
 
 #convert the PIL images into numpy arrays 
