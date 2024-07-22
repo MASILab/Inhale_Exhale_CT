@@ -1,6 +1,6 @@
 import os
-from data.base_dataset import BaseDataset
-from data.image_folder import make_dataset
+from base_dataset import BaseDataset
+from image_folder import make_dataset
 from PIL import Image
 import random
 import numpy as np 
@@ -8,27 +8,27 @@ import nibabel as nib
 from scipy.interpolate import interp1d
 import torch
 from torch.utils.data import DataLoader, Dataset
+import matplotlib.pyplot as plt
 
-class UnalignedDataset(BaseDataset):
+class UnalignedDataset(Dataset):
     """
     Dataset class for mulitpath kernel conversion. Loads in nine kernels and returns the corresponding images.
     """
 
-    def __init__(self, opt):
+    def __init__(self):
         """Initialize this dataset class.
 
         Parameters:
             opt (Option class) -- stores all the experiment flags; needs to be a subclass of BaseOptions
         """
-        BaseDataset.__init__(self, opt)
 
         #When training for four domains, use this code from lines 33-51
-        self.dir_A = os.path.join(opt.dataroot, opt.source_kernel)  
-        self.dir_B = os.path.join(opt.dataroot, opt.target_kernel) 
+        self.dir_A = os.path.join("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/train_slices/inspiratory_BONE")  
+        self.dir_B = os.path.join("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/train_slices/expiratory_STANDARD") 
         print(self.dir_A)
         print(self.dir_B)
-        self.A_paths = sorted(make_dataset(self.dir_A, opt.max_dataset_size))   
-        self.B_paths = sorted(make_dataset(self.dir_B, opt.max_dataset_size))    
+        self.A_paths = sorted(make_dataset(self.dir_A, float("inf")))   
+        self.B_paths = sorted(make_dataset(self.dir_B, float("inf")))    
         self.A_size = len(self.A_paths)  # get the size of dataset A
         self.B_size = len(self.B_paths)  # get the size of dataset B
         # input_nc = self.opt.input_nc    
@@ -51,10 +51,7 @@ class UnalignedDataset(BaseDataset):
         """
         # Get the dataitems for 4 domains
         A_path = self.A_paths[index % self.A_size]  # make sure index is within then range
-        if self.opt.serial_batches:   # make sure index is within then range
-            index_B = index % self.B_size
-        else:   # randomize the index
-            index_B = random.randint(0, self.B_size - 1)
+        index_B = random.randint(0, self.B_size - 1)
         B_path = self.B_paths[index_B]
         
         A = self.normalize(A_path)
@@ -76,7 +73,7 @@ class UnalignedDataset(BaseDataset):
     def normalize(self, input_slice_path):
         """Normalize input slice and return as a tensor ranging from [-1,1]"""
         nift_clip = np.clip(nib.load(input_slice_path).get_fdata()[:,:,0], -1024, 3072)
-        cropped_image = self.random_crop(nift_clip, crop_size = (128, 128)) # Apply a random crop to get a patch of size 128 x 128
+        cropped_image = self.random_crop(image = nift_clip, crop_size=(128,128)) # Apply a random crop to get a patch of size 128 x 128
         norm = self.normalizer(cropped_image)
         tensor = torch.from_numpy(norm)
         torch_tensor = tensor.unsqueeze(0).float()
@@ -91,3 +88,18 @@ class UnalignedDataset(BaseDataset):
         y = np.random.randint(0, h - crop_size[0])
         x = np.random.randint(0, w - crop_size[1])
         return image[y:y + crop_size[0], x:x + crop_size[1]]
+
+
+dataload = DataLoader(UnalignedDataset(), batch_size = 15, shuffle = True)
+#Plot the first batch of images
+for i, data in enumerate(dataload):
+    if i == 0:
+        A = data['A']
+        B = data['B']
+        for j in range(A.size(0)):
+            plt.subplot(1, 2, 1)
+            plt.imshow(A[j].squeeze(0), cmap = 'gray')
+            plt.subplot(1, 2, 2)
+            plt.imshow(B[j].squeeze(0), cmap = 'gray')
+            plt.show()
+    break
