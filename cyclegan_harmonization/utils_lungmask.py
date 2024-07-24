@@ -42,10 +42,12 @@ class GetLungMask:
 
 
 paths = ["/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/train/inspiratory_BONE", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/train/expiratory_STANDARD"]
+val_paths = ["/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/valid/inspiratory_BONE", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/valid/expiratory_STANDARD"]
+test_paths = ["/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/test/inspiratory_BONE", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/test/expiratory_STANDARD"]
 
-for file_path in paths:
+for file_path in test_paths:
     intctdir = file_path
-    outct_dir = file_path.replace("train", "lungmasks")
+    outct_dir = file_path.replace('test', 'lungmasks/test')
     os.makedirs(outct_dir, exist_ok=True)
     lungmask = GetLungMask(intctdir, outct_dir)
     lungmask.generate_lung_mask()
