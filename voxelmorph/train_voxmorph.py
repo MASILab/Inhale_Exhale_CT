@@ -79,5 +79,5 @@ best_val_loss = float('inf')
 #         print(f"Validation Batch {i} Loss {loss.item()}")
 
 #     voxmorph.save(f'./experiments/epoch_{epoch}.pth')
-    print(f"Model saved at epoch {epoch}")
+    # print(f"Model saved at epoch {epoch}")
  
