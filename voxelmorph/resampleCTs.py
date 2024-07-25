@@ -30,6 +30,7 @@ def resample_image(image, new_size=(192, 192, 192)):
     resampled_image = resample.Execute(image)
     return resampled_image
 
+
 def clip_image(image, min_value=-1024, max_value=0):
     # Convert the SimpleITK image to a numpy array
     image_array = sitk.GetArrayFromImage(image)
@@ -112,6 +113,7 @@ def resample_dataset():
         output_path = os.path.join(output_std_test, f"resampled_{std_files_test[i]}")
         sitk.WriteImage(clipped_img, output_path)
 
+
 def clip_intensities():
     output_bone_val = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/non_harmonized/resampled/resampled_val_masked_out_BONE"
     output_std_val = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/non_harmonized/resampled/resampled_val_masked_out_STANDARD"
@@ -146,7 +148,41 @@ def clip_intensities():
         sitk.WriteImage(clipped_img, os.path.join(output_std_test, f"clipped_{std_files_test[i]}"))
 
 
-clip_intensities()
+def resample_harmonized_images():
+    path = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/original"
+    output_path = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/resampled"
+
+    os.makedirs(output_path, exist_ok = True)
+
+    files = os.listdir(path)
+
+    for i in tqdm(range(len(files))):
+        img = sitk.ReadImage(os.path.join(path, files[i]))
+        resampled_img = resample_image(img)
+        clipped_img = clip_image(resampled_img)
+        sitk.WriteImage(clipped_img, os.path.join(output_path, f"resampled_{files[i]}"))
+
+
+def resample_harmonized_val_images():
+    path = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/original/val_masked_out_harmonized"
+    output_path = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/resampled/resampled_val_masked_out_harmonized"
+
+    os.makedirs(output_path, exist_ok = True)
+
+    files = os.listdir(path)
+
+    for i in tqdm(range(len(files))):
+        img = sitk.ReadImage(os.path.join(path, files[i]))
+        resampled_img = resample_image(img)
+        clipped_img = clip_image(resampled_img)
+        sitk.WriteImage(clipped_img, os.path.join(output_path, f"resampled_{files[i]}"))
+
+
+# resample_harmonized_images()
+
+resample_harmonized_val_images()
+
+# clip_intensities()
 
 
 
