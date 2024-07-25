@@ -8,13 +8,14 @@ import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader, Dataset
 from dataloader import VoxelMorphDataloader
 import time
+import pandas as pd
 
 os.environ['NEURITE_BACKEND'] = 'pytorch'
 os.environ['VXM_BACKEND'] = 'pytorch'
 
 #Dataloader for VoxelMorph
-train_dataframe = ""
-valid_dataframe = ""
+train_dataframe = pd.read_csv("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/non_harmonized/resampled")
+valid_dataframe = pd.read_csv("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/non_harmonized/resampled")
 
 train_dataset = VoxelMorphDataloader(train_dataframe)
 valid_dataset = VoxelMorphDataloader(valid_dataframe)
@@ -55,6 +56,8 @@ if len(gpu_ids) > 1:
 voxmorph.to(device)
 
 best_val_loss = float('inf')
+train_loss = []
+val_loss = []
 # for epoch in range(epochs):
 #     train_loss = []
 #     val_loss = []
