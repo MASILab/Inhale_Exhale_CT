@@ -15,8 +15,8 @@ import random
 
 
 #Dataloader for VoxelMorph
-train_dataframe = pd.read_csv("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/non_harmonized/resampled")
-valid_dataframe = pd.read_csv("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/non_harmonized/resampled")
+train_dataframe = pd.read_csv("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/non_harmonized/train_data_voxelmorph.csv")
+valid_dataframe = pd.read_csv("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/non_harmonized/valid_data_voxelmorph.csv")
 
 train_dataset = VoxelMorphDataloader(train_dataframe)
 valid_dataset = VoxelMorphDataloader(valid_dataframe)
@@ -68,6 +68,8 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 if len(gpu_ids) > 1:
     voxmorph = torch.nn.DataParallel(voxmorph)
     voxmorph.save = voxmorph.module.save
+
+print("Number of parameters in VoxelMorph:", sum([p.numel() for p in voxmorph.parameters() if p.requires_grad]))
 
 voxmorph.to(device)
 
