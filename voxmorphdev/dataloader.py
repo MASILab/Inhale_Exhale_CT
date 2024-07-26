@@ -27,7 +27,11 @@ class VoxelMorphDataloader(Dataset):
         bone_tensor = self.normalize(insp_bone)
         std_tensor = self.normalize(exp_std)
 
-        return [std_tensor, bone_tensor], [bone_tensor] #Return moving and fixed image along with the fixe image gorund tensor 
+        #Voxelmorph expects 2 channels where the moving and fixed images will be concatenated
+        bone_tensor = bone_tensor.unsqueeze(0).float()
+        std_tensor = std_tensor.unsqueeze(0).float()
+
+        return [std_tensor, bone_tensor], [bone_tensor] #Return a lits of the moving tesnor and fixed tensor followed by the fixed tensor
 
 
     def normalize(self, data):
@@ -49,5 +53,7 @@ class VoxelMorphDataloader(Dataset):
 # valid_loader = DataLoader(dataset=valid_dataset, batch_size=4, shuffle=False, num_workers=6)
 
 # for i, (data, target) in enumerate(train_loader):
-#     print(data[0].shape, data[1].shape, target[0].shape)
+#     print("Moving image:", data[0].shape)
+#     print("Fixed image:", data[1].shape)
+#     print("Target image:", target[0].shape)
 #     break

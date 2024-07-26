@@ -62,7 +62,7 @@ class NCC:
         I_var = I2_sum - 2 * u_I * I_sum + u_I * u_I * win_size
         J_var = J2_sum - 2 * u_J * J_sum + u_J * u_J * win_size
 
-        cc = cross * cross / (I_var * J_var + 1e-2)
+        cc = cross * cross / (I_var * J_var + 1e-5)
 
         return -torch.mean(cc)
 
@@ -133,43 +133,3 @@ class Grad:
             grad *= self.loss_mult
 
         return grad.mean()
-class my_NCC:
-    """
-    Global normalized cross correlation loss.
-    """
-
-    def __init__(self):
-        pass
-
-    def loss(self, y_true, y_pred):
-
-        Ii = y_true
-        Ji = y_pred
-
-        # get dimension of volume
-        # assumes Ii, Ji are sized [batch_size, *vol_shape, nb_feats]
-        ndims = len(list(Ii.size())) - 2
-        assert ndims in [1, 2, 3], "volumes should be 1 to 3 dimensions. found: %d" % ndims
-
-        # compute CC squares
-        I2 = Ii * Ii
-        J2 = Ji * Ji
-        IJ = Ii * Ji
-
-        I_sum = torch.sum(Ii)
-        J_sum = torch.sum(Ji)
-        I2_sum = torch.sum(I2)
-        J2_sum = torch.sum(J2)
-        IJ_sum = torch.sum(IJ)
-
-        # calculate means
-        u_I = I_sum / torch.numel(Ii)
-        u_J = J_sum / torch.numel(Ji)
-
-        cross = IJ_sum - u_J * I_sum - u_I * J_sum + u_I * u_J * torch.numel(Ii)
-        I_var = I2_sum - 2 * u_I * I_sum + u_I * u_I * torch.numel(Ii)
-        J_var = J2_sum - 2 * u_J * J_sum + u_J * u_J * torch.numel(Ji)
-
-        cc = cross * cross / (I_var * J_var + 1e-5)
-
-        return -torch.mean(cc)

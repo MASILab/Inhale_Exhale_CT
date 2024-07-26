@@ -1,0 +1,29 @@
+2024-07-25 13:57:04,034 INFO    MainThread:195023 [wandb_setup.py:_flush():76] Current SDK version is 0.17.4
+2024-07-25 13:57:04,034 INFO    MainThread:195023 [wandb_setup.py:_flush():76] Configure stats pid to 195023
+2024-07-25 13:57:04,034 INFO    MainThread:195023 [wandb_setup.py:_flush():76] Loading settings from /home/local/VANDERBILT/krishar1/.config/wandb/settings
+2024-07-25 13:57:04,034 INFO    MainThread:195023 [wandb_setup.py:_flush():76] Loading settings from /nfs/masi/krishar1/Inhale_Exhale_CT/voxmorphdev/wandb/settings
+2024-07-25 13:57:04,034 INFO    MainThread:195023 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-07-25 13:57:04,034 INFO    MainThread:195023 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-07-25 13:57:04,034 INFO    MainThread:195023 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'voxmorphdev/train_voxmorph.py', 'program_abspath': '/nfs/masi/krishar1/Inhale_Exhale_CT/voxmorphdev/train_voxmorph.py', 'program': '/nfs/masi/krishar1/Inhale_Exhale_CT/voxmorphdev/train_voxmorph.py'}
+2024-07-25 13:57:04,034 INFO    MainThread:195023 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-07-25 13:57:04,035 INFO    MainThread:195023 [wandb_init.py:_log_setup():529] Logging user logs to /nfs/masi/krishar1/Inhale_Exhale_CT/voxmorphdev/wandb/run-20240725_135703-tse19u49/logs/debug.log
+2024-07-25 13:57:04,035 INFO    MainThread:195023 [wandb_init.py:_log_setup():530] Logging internal logs to /nfs/masi/krishar1/Inhale_Exhale_CT/voxmorphdev/wandb/run-20240725_135703-tse19u49/logs/debug-internal.log
+2024-07-25 13:57:04,035 INFO    MainThread:195023 [wandb_init.py:init():569] calling init triggers
+2024-07-25 13:57:04,035 INFO    MainThread:195023 [wandb_init.py:init():576] wandb.init called with sweep_config: {}
+config: {'learning_rate': 0.0001, 'epochs': 30, 'Loss fn': 'NCC, L2_norm', 'Optimizer': 'Adam', 'NCC Hyperparameters': 1, 'L2_norm Hyperparameters': 0.1, 'Batch Size': 4, 'NCC_Win_Size': 9, 'Epochs storage': '/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/experiments/voxelmorph_non_harmonized'}
+2024-07-25 13:57:04,035 INFO    MainThread:195023 [wandb_init.py:init():619] starting backend
+2024-07-25 13:57:04,035 INFO    MainThread:195023 [wandb_init.py:init():623] setting up manager
+2024-07-25 13:57:04,037 INFO    MainThread:195023 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2024-07-25 13:57:04,040 INFO    MainThread:195023 [wandb_init.py:init():631] backend started and connected
+2024-07-25 13:57:04,044 INFO    MainThread:195023 [wandb_init.py:init():720] updated telemetry
+2024-07-25 13:57:04,115 INFO    MainThread:195023 [wandb_init.py:init():753] communicating run to backend with 90.0 second timeout
+2024-07-25 13:57:04,391 INFO    MainThread:195023 [wandb_run.py:_on_init():2402] communicating current version
+2024-07-25 13:57:04,593 INFO    MainThread:195023 [wandb_run.py:_on_init():2411] got version response upgrade_message: "wandb version 0.17.5 is available!  To upgrade, please run:\n $ pip install wandb --upgrade"
+
+2024-07-25 13:57:04,594 INFO    MainThread:195023 [wandb_init.py:init():804] starting run threads in backend
+2024-07-25 13:57:09,771 INFO    MainThread:195023 [wandb_run.py:_console_start():2380] atexit reg
+2024-07-25 13:57:09,771 INFO    MainThread:195023 [wandb_run.py:_redirect():2235] redirect: wrap_raw
+2024-07-25 13:57:09,772 INFO    MainThread:195023 [wandb_run.py:_redirect():2300] Wrapping output streams.
+2024-07-25 13:57:09,772 INFO    MainThread:195023 [wandb_run.py:_redirect():2325] Redirects installed.
+2024-07-25 13:57:09,788 INFO    MainThread:195023 [wandb_init.py:init():847] run started, returning control to user process
+2024-07-25 14:14:35,515 WARNING MsgRouterThr:195023 [router.py:message_loop():77] message_loop has been closed

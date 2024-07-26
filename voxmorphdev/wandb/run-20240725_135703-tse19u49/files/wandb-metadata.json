@@ -1,0 +1,148 @@
+{
+    "os": "Linux-5.4.0-189-generic-x86_64-with-glibc2.31",
+    "python": "3.11.4",
+    "heartbeatAt": "2024-07-25T18:57:04.659857",
+    "startedAt": "2024-07-25T18:57:03.971949",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/nfs/masi/krishar1/Inhale_Exhale_CT/voxmorphdev/train_voxmorph.py",
+    "codePathLocal": "train_voxmorph.py",
+    "codePath": "voxmorphdev/train_voxmorph.py",
+    "git": {
+        "remote": "https://github.com/MASILab/Inhale_Exhale_CT.git",
+        "commit": "1dde53c484f4535cef1441160277be86900086e3"
+    },
+    "email": "aravind1999@gmail.com",
+    "root": "/nfs/masi/krishar1/Inhale_Exhale_CT",
+    "host": "MASI-57.vuds.vanderbilt.edu",
+    "username": "krishar1",
+    "executable": "/home/local/VANDERBILT/krishar1/anaconda/envs/multipathgan/bin/python",
+    "cpu_count": 10,
+    "cpu_count_logical": 20,
+    "cpu_freq": {
+        "current": 1217.5769500000001,
+        "min": 1200.0,
+        "max": 4560.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1200.008,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1200.142,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1200.663,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1318.618,
+            "min": 1200.0,
+            "max": 4700.0
+        },
+        {
+            "current": 1290.399,
+            "min": 1200.0,
+            "max": 4700.0
+        },
+        {
+            "current": 1200.015,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1200.351,
+            "min": 1200.0,
+            "max": 4600.0
+        },
+        {
+            "current": 1200.021,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1199.3,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1200.913,
+            "min": 1200.0,
+            "max": 4600.0
+        },
+        {
+            "current": 1200.807,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1200.132,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1199.902,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1277.783,
+            "min": 1200.0,
+            "max": 4700.0
+        },
+        {
+            "current": 1262.281,
+            "min": 1200.0,
+            "max": 4700.0
+        },
+        {
+            "current": 1200.212,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1200.002,
+            "min": 1200.0,
+            "max": 4600.0
+        },
+        {
+            "current": 1200.004,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1199.99,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1199.996,
+            "min": 1200.0,
+            "max": 4600.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 937.3305015563965,
+            "used": 723.7516288757324
+        }
+    },
+    "gpu": "NVIDIA RTX A6000",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA RTX A6000",
+            "memory_total": 51527024640
+        }
+    ],
+    "memory": {
+        "total": 62.49135208129883
+    }
+}
