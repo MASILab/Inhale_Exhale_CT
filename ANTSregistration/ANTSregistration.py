@@ -98,7 +98,7 @@ def register_non_harmonzied():
         plt.close()
 
  
-# def register_harmonized():
+
 
 # register_non_harmonzied()
 
