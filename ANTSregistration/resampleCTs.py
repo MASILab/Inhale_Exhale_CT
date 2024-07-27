@@ -31,6 +31,27 @@ def resample_image(image, new_size=(192, 192, 192)):
     return resampled_image
 
 
+def resample_mask(image, new_size=(192, 192, 192)):
+    # Calculate the original size and spacing
+    original_size = np.array(image.GetSize(), dtype=int)
+    original_spacing = np.array(image.GetSpacing(), dtype=float)
+
+    # Calculate the new spacing based on the original size and new size
+    new_spacing = (original_size * original_spacing) / new_size
+    new_spacing = [float(spacing) for spacing in new_spacing]
+
+    # Resample using SimpleITK
+    resample = sitk.ResampleImageFilter()
+    resample.SetOutputSpacing(new_spacing)
+    resample.SetSize(new_size)
+    resample.SetOutputDirection(image.GetDirection())
+    resample.SetOutputOrigin(image.GetOrigin())
+    resample.SetInterpolator(sitk.sitkNearestNeighbor)
+
+    resampled_image = resample.Execute(image)
+    return resampled_image
+
+
 def clip_image(image, min_value=-1024, max_value=0):
     # Convert the SimpleITK image to a numpy array
     image_array = sitk.GetArrayFromImage(image)
@@ -178,12 +199,52 @@ def resample_harmonized_val_images():
         sitk.WriteImage(clipped_img, os.path.join(output_path, f"resampled_{files[i]}"))
 
 
+
+def resample_masks():
+    bone = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/lungmasks/inference_lung_masks/inspiratory_BONE"
+    std = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/lungmasks/inference_lung_masks/expiratory_STANDARD"
+
+    harm_bone = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/lungmasks/harmonized_BONE_lung_masks"    
+
+    non_harm_out_bone = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/lungmasks/inference_resampled_lung_masks/inspiratory_BONE"
+    non_harm_out_std = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/lungmasks/inference_resampled_lung_masks/expiratory_STANDARD"
+    harm_out = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/lungmasks/resampled_harmonized_BONE_lung_masks"
+
+    os.makedirs(non_harm_out_bone, exist_ok = True)
+    os.makedirs(non_harm_out_std, exist_ok = True)
+    os.makedirs(harm_out, exist_ok = True)
+
+    bone_files = sorted(os.listdir(bone))
+    std_files = sorted(os.listdir(std))
+    harm_files = sorted(os.listdir(harm_bone))
+
+    print("Resampling non harmonized BONE kernels")
+    for i in tqdm(range(len(bone_files))):
+        img = sitk.ReadImage(os.path.join(bone, bone_files[i]))
+        resampled_img = resample_mask(img)
+        print("Saving image to:", os.path.join(non_harm_out_bone, f"resampled_{bone_files[i]}"))
+        sitk.WriteImage(resampled_img, os.path.join(non_harm_out_bone, f"resampled_{bone_files[i]}"))
+    
+    print("Resampling non harmonized STANDARD kernels")
+    for i in tqdm(range(len(std_files))):
+        img = sitk.ReadImage(os.path.join(std, std_files[i]))
+        resampled_img = resample_mask(img)
+        print("Saving image to:", os.path.join(non_harm_out_std, f"resampled_{std_files[i]}"))
+        sitk.WriteImage(resampled_img, os.path.join(non_harm_out_std, f"resampled_{std_files[i]}"))
+
+    print("Resampling harmonized BONE kernels")
+    for i in tqdm(range(len(harm_files))):
+        img = sitk.ReadImage(os.path.join(harm_bone, harm_files[i]))
+        resampled_img = resample_mask(img)
+        print("Saving image to:", os.path.join(harm_out, f"resampled_{harm_files[i]}"))
+        sitk.WriteImage(resampled_img, os.path.join(harm_out, f"resampled_{harm_files[i]}"))
+
 # resample_harmonized_images()
 
-resample_harmonized_val_images()
+# resample_harmonized_val_images()
 
 # clip_intensities()
 
-
-
 # resample_dataset()
+
+resample_masks()
