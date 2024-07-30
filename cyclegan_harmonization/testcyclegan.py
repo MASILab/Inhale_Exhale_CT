@@ -13,7 +13,7 @@ from collections import OrderedDict
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-gen_dict = torch.load("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/experiments/inspiration_expiration_COPD/inspiration_expiration_COPD/15_net_G_A.pth")
+gen_dict = torch.load("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/experiments/inspiration_expiration_COPD/inspiration_expiration_COPD/5_net_G_B.pth")
 ord_dict = OrderedDict()
 for k,v in gen_dict.items():
     ord_dict["module." + k] = v
@@ -22,8 +22,8 @@ for k,v in gen_dict.items():
 generator = define_G(input_nc=1, output_nc=1, ngf=64, netG="resnet_9blocks", norm="instance", use_dropout=False, init_type="normal", init_gain=0.02, gpu_ids=[0])
 generator.load_state_dict(ord_dict)
 
-in_nii_path = glob(os.path.join("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/valid/inspiratory_BONE", '*.nii.gz'))
-out_nii = os.path.join("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/experiments", "inps_exp_COPD_epoch15")
+in_nii_path = glob(os.path.join("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/valid/expiratory_STANDARD", "COPDGene_L75615_STANDARD.nii.gz"))
+out_nii = os.path.join("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/SPIE_paper_figures/method")
 print(in_nii_path, out_nii)
 os.makedirs(out_nii, exist_ok=True)
 print(f'Identify {len(in_nii_path)} scans (.nii.gz)')
