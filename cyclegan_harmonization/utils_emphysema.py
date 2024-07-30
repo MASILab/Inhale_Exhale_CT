@@ -124,12 +124,15 @@ class EmphysemaAnalysis:
 #                   ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/SyN_registered_STANDARD_expiratory_images", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/emphysema_SyN_registered_STANDARD_expiratory_images")] #Expiratory STANDARD harmonized registered
 
 
-registered_insp_to_exp = [("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/non_harmonized/SyN_registered_BONE_inspiratory_images_without_mask", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/non_harmonized/emphysema_SyN_registered_BONE_inspiratory_images_without_mask"),
-                          ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/SyN_registered_BONE_inspiratory_images_without_mask", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/emphysema_SyN_registered_BONE_inspiratory_images_without_mask")
-]
+# registered_insp_to_exp = [("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/non_harmonized/SyN_registered_BONE_inspiratory_images_without_mask", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/non_harmonized/emphysema_SyN_registered_BONE_inspiratory_images_without_mask"),
+#                           ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/SyN_registered_BONE_inspiratory_images_without_mask", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/emphysema_SyN_registered_BONE_inspiratory_images_without_mask")
+# ]
+
+non_harm_registered = [("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/SyN_exptoinsp_STANDARD_non_harmonized", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/emph_SyN_exptoinsp_STANDARD_non_harmonized"), 
+                       ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/SyN_insptoexp_BONE_non_harmonized", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/emp_SyN_insptoexp_BONE_non_harmonized")]
 
 
-for inpath, outpath in tqdm(registered_insp_to_exp):
+for inpath, outpath in tqdm(non_harm_registered):
     print(f"Processing {inpath}")
     print(f"Output directory: {outpath}")
     os.makedirs(outpath, exist_ok=True)
