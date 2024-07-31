@@ -128,11 +128,17 @@ class EmphysemaAnalysis:
 #                           ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/SyN_registered_BONE_inspiratory_images_without_mask", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/emphysema_SyN_registered_BONE_inspiratory_images_without_mask")
 # ]
 
-non_harm_registered = [("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/SyN_exptoinsp_STANDARD_non_harmonized", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/emph_SyN_exptoinsp_STANDARD_non_harmonized"), 
-                       ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/SyN_insptoexp_BONE_non_harmonized", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/emp_SyN_insptoexp_BONE_non_harmonized")]
+# non_harm_registered = [("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/SyN_exptoinsp_STANDARD_non_harmonized", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/emph_SyN_exptoinsp_STANDARD_non_harmonized"), 
+#                        ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/SyN_insptoexp_BONE_non_harmonized", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/emp_SyN_insptoexp_BONE_non_harmonized")]
 
 
-for inpath, outpath in tqdm(non_harm_registered):
+# harm_registered = [("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/SyN_exptoinsp_STANDARD_harmonized", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/emph_SyN_exptoinsp_STANDARD_harmonized"), 
+#                        ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/SyN_insptoexp_BONE_harmonized", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/emp_SyN_insptoexp_BONE_harmonized")]
+
+registered_original_space = [("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_original_resolution/non_harmonized/SyN_exptoinsp", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_original_resolution/non_harmonized/emph_SyN_exptoinsp"),
+                             ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_original_resolution/harmonized/SyN_exptoinsp", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_original_resolution/harmonized/emph_SyN_exptoinsp")]
+
+for inpath, outpath in tqdm(harm_registered):
     print(f"Processing {inpath}")
     print(f"Output directory: {outpath}")
     os.makedirs(outpath, exist_ok=True)
