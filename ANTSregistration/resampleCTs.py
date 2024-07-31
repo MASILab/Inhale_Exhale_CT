@@ -239,6 +239,7 @@ def resample_masks():
         print("Saving image to:", os.path.join(harm_out, f"resampled_{harm_files[i]}"))
         sitk.WriteImage(resampled_img, os.path.join(harm_out, f"resampled_{harm_files[i]}"))
 
+
 # resample_harmonized_images()
 
 # resample_harmonized_val_images()
@@ -247,4 +248,4 @@ def resample_masks():
 
 # resample_dataset()
 
-resample_masks()
+# resample_masks()
