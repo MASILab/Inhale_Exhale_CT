@@ -50,7 +50,6 @@ class EmphysemaAnalysis:
         lung_mask_dir = os.path.join(self.lung_mask_dir)
 
         emph_threshold = -950
-        files = os.listdir(self.in_ct_dir)
 
         ct_list = os.listdir(self.in_ct_dir)
 
@@ -112,29 +111,29 @@ reg_non_harm = [("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registr
               ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/ANTS_outputs_exp_toinsp_nonharmonized_emphysema")]
 paths = reg_non_harm[0]
 
-for file in tqdm(os.listdir(paths)):
-    files = os.listdir(os.path.join(paths, file))
+
+# for file in tqdm(os.listdir(paths)):
+#     files = os.listdir(os.path.join(paths, file))
 
 
-    for image in files:
-        if image.endswith("_Warped.nii.gz"):
-            out_file = os.path.join(paths, file, image)
-            print(out_file)
+#     for image in files:
+#         if image.endswith("_Warped.nii.gz"):
+#             out_file = os.path.join(paths, file, image)
+#             print(out_file)
     
-    #Copy the output file to the correct directory
-    shutil.copy(out_file, "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/ANTS_outputs_exptoinsp_harmonized_emphysema/images")
+#     #Copy the output file to the correct directory
+#     shutil.copy(out_file, "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/ANTS_outputs_exptoinsp_harmonized_emphysema/images")
 
 
-# for inpath, outpath, lung_mask in tqdm(reg_non_harm):
-#     print(f"Processing {inpath}")
-#     print(f"Output directory: {outpath}")
-#     os.makedirs(outpath, exist_ok=True) 
+outpath ="/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/ANTS_outputs_exp_toinsp_nonharmonized_emphysema"
+inpath = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/ANTS_outputs_exp_toinsp_nonharmonized_emphysema/images"
+lung_mask = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/ANTS_outputs_exp_toinsp_nonharmonized_emphysema/lung_masks"
 
-#     ct_list = sorted(os.listdir(inpath))
-#     mask_list = sorted(os.listdir(lung_mask))
+print(f"Processing {inpath}")
+print(f"Output directory: {outpath}")
+os.makedirs(outpath, exist_ok=True) 
 
-
-#     emphysema_analysis = EmphysemaAnalysis(in_ct_dir = inpath, project_dir=outpath, lung_mask_dir=lung_mask)
-#     # emphysema_analysis.generate_lung_mask()
-#     emphysema_analysis.get_emphysema_mask()
-#     emphysema_analysis.get_emphysema_measurement()
+emphysema_analysis = EmphysemaAnalysis(in_ct_dir = inpath, project_dir=outpath, lung_mask_dir=lung_mask)
+# emphysema_analysis.generate_lung_mask()
+emphysema_analysis.get_emphysema_mask()
+emphysema_analysis.get_emphysema_measurement()
