@@ -6,6 +6,7 @@ import nibabel as nib
 import numpy as np
 from joblib import Parallel, delayed
 from tqdm import tqdm
+import shutil
 
 
 logger = logging.getLogger()
@@ -49,6 +50,8 @@ class EmphysemaAnalysis:
         lung_mask_dir = os.path.join(self.lung_mask_dir)
 
         emph_threshold = -950
+        files = os.listdir(self.in_ct_dir)
+
         ct_list = os.listdir(self.in_ct_dir)
 
         emph_mask_dir = os.path.join(self.project_dir, 'emphysema')
@@ -56,7 +59,7 @@ class EmphysemaAnalysis:
 
         def _process_single_case(ct_file_name):
             in_ct = os.path.join(self.in_ct_dir, ct_file_name)
-            lung_mask = os.path.join(lung_mask_dir, ct_file_name)
+            lung_mask = os.path.join(lung_mask_dir,ct_file_name)
 
             ct_img = nib.load(in_ct)
             lung_img = nib.load(lung_mask)
@@ -80,7 +83,7 @@ class EmphysemaAnalysis:
           for ct_file_name in tqdm(ct_list, total=len(ct_list)))
 
     def get_emphysema_measurement(self):
-        lung_mask_dir = os.path.join(self.project_dir, 'lung_mask')
+        lung_mask_dir = os.path.join(self.lung_mask_dir)
         emph_mask_dir = os.path.join(self.project_dir, 'emphysema')
 
         ct_file_list = os.listdir(lung_mask_dir)
@@ -104,15 +107,34 @@ class EmphysemaAnalysis:
         emph_score_df.to_csv(emph_score_csv, index=False)
 
 
-precomp_lung_masks = [("")]
+reg_non_harm = [("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/ANTS_outputs_exptoinsp_harmonized"), 
+              ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/ANTS_outputs_exp_toinsp_nonharmonized_emphysema/lung_masks"),
+              ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/ANTS_outputs_exp_toinsp_nonharmonized_emphysema")]
+paths = reg_non_harm[0]
+
+for file in tqdm(os.listdir(paths)):
+    files = os.listdir(os.path.join(paths, file))
 
 
+    for image in files:
+        if image.endswith("_Warped.nii.gz"):
+            out_file = os.path.join(paths, file, image)
+            print(out_file)
+    
+    #Copy the output file to the correct directory
+    shutil.copy(out_file, "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/ANTS_outputs_exptoinsp_harmonized_emphysema/images")
 
-for inpath, outpath in tqdm():
-    print(f"Processing {inpath}")
-    print(f"Output directory: {outpath}")
-    os.makedirs(outpath, exist_ok=True)
-    emphysema_analysis = EmphysemaAnalysis(in_ct_dir = inpath, project_dir=outpath)
-    emphysema_analysis.generate_lung_mask()
-    emphysema_analysis.get_emphysema_mask()
-    emphysema_analysis.get_emphysema_measurement()
+
+# for inpath, outpath, lung_mask in tqdm(reg_non_harm):
+#     print(f"Processing {inpath}")
+#     print(f"Output directory: {outpath}")
+#     os.makedirs(outpath, exist_ok=True) 
+
+#     ct_list = sorted(os.listdir(inpath))
+#     mask_list = sorted(os.listdir(lung_mask))
+
+
+#     emphysema_analysis = EmphysemaAnalysis(in_ct_dir = inpath, project_dir=outpath, lung_mask_dir=lung_mask)
+#     # emphysema_analysis.generate_lung_mask()
+#     emphysema_analysis.get_emphysema_mask()
+#     emphysema_analysis.get_emphysema_measurement()
