@@ -21,3 +21,4 @@ harmonized_fixed = sorted(os.listdir(harmonized_fixed_path))
 with open("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/harmonized.txt", "w") as f:
     for fixed, moving in zip(harmonized_fixed, moving_one_files):
         f.write(f"{harmonized_fixed_path}{fixed} {moving_path}{moving}\n")
+
