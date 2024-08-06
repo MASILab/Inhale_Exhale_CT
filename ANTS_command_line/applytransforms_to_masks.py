@@ -4,20 +4,26 @@ from tqdm import tqdm
 
 
 #apply deformation fields to the lung masks to get the deformed masks 
-def run_empysema_warp_SyN():
-    # fixed_inhalation_masks = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/val_test/insp_BONE_emphysema/emphysema"
+def run_emphysema_warp_SyN():
+    subjects_BONE = ["COPDGene_A43240_BONE.nii.gz", "COPDGene_B05639_BONE.nii.gz", "COPDGene_B14644_BONE.nii.gz", "COPDGene_C64585_BONE.nii.gz", 
+                     "COPDGene_D48362_BONE.nii.gz", "COPDGene_D70993_BONE.nii.gz", "COPDGene_D80990_BONE_control.nii.gz", "COPDGene_D90444_BONE.nii.gz", 
+                     "COPDGene_E59904_BONE.nii.gz", "COPDGene_E69868_BONE.nii.gz", "COPDGene_E73754_BONE_control.nii.gz"]
+    
+    subjects_STANDARD = ["COPDGene_A43240_STANDARD.nii.gz", "COPDGene_B05639_STANDARD.nii.gz", "COPDGene_B14644_STANDARD.nii.gz", "COPDGene_C64585_STANDARD.nii.gz",
+                            "COPDGene_D48362_STANDARD.nii.gz", "COPDGene_D70993_STANDARD.nii.gz", "COPDGene_D80990_STANDARD_control.nii.gz", "COPDGene_D90444_STANDARD.nii.gz",
+                            "COPDGene_E59904_STANDARD.nii.gz", "COPDGene_E69868_STANDARD.nii.gz", "COPDGene_E73754_STANDARD_control.nii.gz"]
+    
+
     fixed_inhalation_masks = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/experiments/insp_exp_run1_results_cycleGAN/harmonized_emphysema_epoch5/emphysema"
+
     moving_exhalation_masks = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/val_test/exp_STANDARD_emphysema/emphysema"
 
-    # non_harmonized_transforms = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/ANTS_outputs_exp_toinsp_nonharmonized"
+    harmonized_transforms = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/harm_cases_ANTS_fullrun"
+ 
+    output_lung_masks = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/emphysema_harm_ANTS_fullrun_11subjects"
 
-    harmonized_transforms = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/ANTS_outputs_exptoinsp_harmonized"
-
-    # output_lung_masks = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/ANTS_outputs_exp_toinsp_nonharmonized_emphysema/warped_emphysema_insp_to_exp" 
-    output_lung_masks = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/ANTS_outputs_exptoinsp_harmonized_emphysema/warped_emphysema_insp_to_exp"
-
-    fixed_masks = sorted(os.listdir(fixed_inhalation_masks))
-    moving_masks = sorted(os.listdir(moving_exhalation_masks))
+    fixed_masks = sorted([file for file in os.listdir(fixed_inhalation_masks) if file in subjects_BONE])
+    moving_masks = sorted([file for file in os.listdir(moving_exhalation_masks) if file in subjects_STANDARD])
     transforms = sorted(os.listdir(harmonized_transforms))
 
     for fixed, moving, transform in tqdm(zip(fixed_masks, moving_masks, transforms), total=len(fixed_masks)):
@@ -27,11 +33,11 @@ def run_empysema_warp_SyN():
 
         files_transforms = os.listdir(transform_path)
         for file in files_transforms:
-            if file.endswith("_1InverseWarp.nii.gz"):
+            if file.endswith("_1Warp.nii.gz"):
                 warp_field = os.path.join(harmonized_transforms, transform, file)
             if file.endswith("_0GenericAffine.mat"):
                 affine_field = os.path.join(harmonized_transforms, transform, file)
-            if file.endswith("_InverseWarped.nii.gz"):
+            if file.endswith("_Warped.nii.gz"):
                 outfile = file
 
         output_mask_path = os.path.join(output_lung_masks, outfile)
@@ -40,8 +46,7 @@ def run_empysema_warp_SyN():
         print("Apply the ANTS transforms")
 
         #Apply the transform to the moving mask
-        # command = f"antsApplyTransforms -d 3 -i {moving_mask_path} -r {fixed_mask_path} -t {warp_field} -t {affine_field} -n NearestNeighbor -o {output_mask_path}"
-        command = f"antsApplyTransforms -d 3 -i {fixed_mask_path} -r {moving_mask_path} -t {warp_field} -t {[ affine_field, 1 ]} -n NearestNeighbor -o {output_mask_path}"
+        command = f"antsApplyTransforms -d 3 -i {moving_mask_path} -r {fixed_mask_path} -t {warp_field} -t {affine_field} -n NearestNeighbor -o {output_mask_path}"
         print(command)
         os.system(command)
 
@@ -80,4 +85,5 @@ def run_emphysema_warp_rigid_reg():
         print(command)
         os.system(command)
 
-run_emphysema_warp_rigid_reg()
+# run_emphysema_warp_rigid_reg()
+run_emphysema_warp_SyN()
