@@ -170,4 +170,42 @@ def run_emphysema_warp_ANTS_full_SyN_nonharmonized():
         os.system(command)
 
 # run_emphysema_warp_ANTS_full_SyN()
-run_emphysema_warp_ANTS_full_SyN_nonharmonized()
+# run_emphysema_warp_ANTS_full_SyN_nonharmonized()
+
+
+def run_emphysema_warp_rigid_reg_non_harm():
+    fixed_inhalation_masks = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/val_test/insp_BONE_emphysema/emphysema"
+    moving_exhalation_masks = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/val_test/exp_STANDARD_emphysema/emphysema"
+
+    harmonized_transforms = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/nonharm_ANTS_outputs_exptoinsp_large_images_rigid_registered"
+
+    output = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/nonharm_rigid_registered_emphysema_masks_warped"
+
+    fixed_masks = sorted(os.listdir(fixed_inhalation_masks))
+    moving_masks = sorted(os.listdir(moving_exhalation_masks))
+    transforms = sorted(os.listdir(harmonized_transforms))
+
+    for fixed, moving, transform in tqdm(zip(fixed_masks, moving_masks, transforms), total=len(fixed_masks)):
+        fixed_mask_path = os.path.join(fixed_inhalation_masks, fixed)
+        moving_mask_path = os.path.join(moving_exhalation_masks, moving)
+        transform_path = os.path.join(harmonized_transforms, transform)
+
+        files_transforms = os.listdir(transform_path)
+        for file in files_transforms:
+            if file.endswith("_0GenericAffine.mat"):
+                affine_field = os.path.join(harmonized_transforms, transform, file)
+            if file.endswith("_Warped.nii.gz"):
+                outfile = file
+
+        output_mask_path = os.path.join(output, outfile)
+
+        print("Rigid register the masks for", moving)
+        print("Apply the ANTS transforms")
+
+        #Apply the transform to the moving mask
+        command = f"antsApplyTransforms -d 3 -i {moving_mask_path} -r {fixed_mask_path} -t {affine_field} -n NearestNeighbor -o {output_mask_path}" #For rigid registration
+        print(command)
+        os.system(command)
+
+
+run_emphysema_warp_rigid_reg_non_harm()
