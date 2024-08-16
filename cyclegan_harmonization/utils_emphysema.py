@@ -124,27 +124,16 @@ class EmphysemaAnalysis:
 #                   ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/SyN_registered_STANDARD_expiratory_images", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/emphysema_SyN_registered_STANDARD_expiratory_images")] #Expiratory STANDARD harmonized registered
 
 
-# registered_insp_to_exp = [("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/non_harmonized/SyN_registered_BONE_inspiratory_images_without_mask", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/non_harmonized/emphysema_SyN_registered_BONE_inspiratory_images_without_mask"),
-#                           ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/SyN_registered_BONE_inspiratory_images_without_mask", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_data/harmonized/emphysema_SyN_registered_BONE_inspiratory_images_without_mask")
-# ]
 
-# non_harm_registered = [("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/SyN_exptoinsp_STANDARD_non_harmonized", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/emph_SyN_exptoinsp_STANDARD_non_harmonized"), 
-#                        ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/SyN_insptoexp_BONE_non_harmonized", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/emp_SyN_insptoexp_BONE_non_harmonized")]
+#Need in CT, lung mask and generate emphysema mask
 
+inpath = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/emphysema_inhale_soft_kernel/NIfTI_file"
+outpath = "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_ANTS_command_line/emphysema_inhale_soft_kernel"
 
-# harm_registered = [("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/SyN_exptoinsp_STANDARD_harmonized", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/emph_SyN_exptoinsp_STANDARD_harmonized"), 
-#                        ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/SyN_insptoexp_BONE_harmonized", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/final_regsitered_data_with_masks/emp_SyN_insptoexp_BONE_harmonized")]
-
-registered_original_space = [("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_original_resolution/non_harmonized/SyN_exptoinsp", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_original_resolution/non_harmonized/emph_SyN_exptoinsp"),
-                             ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_original_resolution/harmonized/SyN_exptoinsp", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_original_resolution/harmonized/emph_SyN_exptoinsp"), 
-                             ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_original_resolution/non_harmonized/SyN_insptoexp", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_original_resolution/non_harmonized/emph_SyN_insptoexp"),
-                             ("/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_original_resolution/harmonized/SyN_insptoexp", "/nfs/masi/krishar1/SPIE_2025_InhaleExhaleCT/data_split/registration_original_resolution/harmonized/emph_SyN_insptoexp")]
-
-for inpath, outpath in tqdm(registered_original_space):
-    print(f"Processing {inpath}")
-    print(f"Output directory: {outpath}")
-    os.makedirs(outpath, exist_ok=True)
-    emphysema_analysis = EmphysemaAnalysis(in_ct_dir = inpath, project_dir=outpath)
-    emphysema_analysis.generate_lung_mask()
-    emphysema_analysis.get_emphysema_mask()
-    emphysema_analysis.get_emphysema_measurement()
+print(f"Processing {inpath}")
+print(f"Output directory: {outpath}")
+os.makedirs(outpath, exist_ok=True)
+emphysema_analysis = EmphysemaAnalysis(in_ct_dir = inpath, project_dir=outpath)
+emphysema_analysis.generate_lung_mask()
+emphysema_analysis.get_emphysema_mask()
+emphysema_analysis.get_emphysema_measurement()
